@@ -21,8 +21,8 @@ import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
 @CrossOrigin
 
 // PURPOSE
-// Handles user login/authentication 
-// Generates & issues JWTs upon successful authentication 
+// Handles user login/authentication
+// Generates & issues JWTs upon successful authentication
 
 public class JwtApiController {
 
@@ -54,22 +54,24 @@ public class JwtApiController {
 
         // Create an HTTP-only secure cookie with the JWT
         final ResponseCookie tokenCookie = ResponseCookie.from("jwt", token)
-            .httpOnly(true)
-            .secure(true)
-            .path("/")
-            .maxAge(3600)
-            .sameSite("None; Secure")
-            // .domain("example.com") // Set to backend domain if needed
-            .build();
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(3600)
+                .sameSite("None; Secure")
+                // .domain("example.com") // Set to backend domain if needed
+                .build();
 
         // Return HTTP response with JWT cookie
+        System.out.println(tokenCookie.toString());
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).build();
     }
 
     // Called internally to authenticate the user
     private void authenticate(String username, String password) throws Exception {
         try {
-            // Use AuthenticationManager to authenticate the user based on provided credentials
+            // Use AuthenticationManager to authenticate the user based on provided
+            // credentials
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (DisabledException e) {
             // Handle if the user account is disabled
